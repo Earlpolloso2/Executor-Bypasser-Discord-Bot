@@ -87,6 +87,18 @@ const commands = [
         ],
     },
     {
+        name: 'fluxus',
+        description: 'Bypass Fluxus Key',
+        options: [
+            {
+                name: 'link',
+                type: 3,
+                description: 'The Fluxus link',
+                required: true,
+             },
+         ],
+     }, 
+     {
         name: 'vegax',
         description: 'Gets VegaX Key',
         options: [
@@ -164,6 +176,13 @@ client.on('interactionCreate', async interaction => {
         await trigon(interaction);
         if(advertise == true ){
             await interaction.followUp({ content: serverinvite, ephemeral: true });
+        }else{
+            return;
+        }
+    } else if (interaction.commandName === 'fluxus') {
+        await fluxus(interaction);
+        if(advertise == false ){
+            await interaction.followUp({ content: `Join discord ${serverinvite}`, ephemeral: true });
         }else{
             return;
         }
@@ -671,6 +690,108 @@ async function trigon(interaction) {
         await interaction.editReply({
             embeds: [{
                 title: "Invalid Trigon Link",
+                fields: [
+                    { name: 'Link', value: `${box}${link}${box}` }
+                ]
+            }]
+        });
+    }
+}
+
+async function fluxus(interaction) {
+    const link = interaction.options.getString('link');
+    const box = "```";
+
+    await interaction.reply({
+        embeds: [{
+            title: "Bypass Key Fluxus",
+            "color": 0x10a3de,
+            thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
+            image: {
+                url: "",
+              }, 
+            fields: [
+                { name: 'Status', value: '```Please wait 0-60s```' }
+            ]
+        }],
+    });
+
+    if (link.startsWith('')) {
+        const urlParams = new URLSearchParams(new URL(link).search);
+        const hwid = urlParams.get('hwid');
+        const apiUrl = `https://bypassi.goatbypassers.xyz/?url=${link}&apikey=${apikey}`;
+
+        try {
+            const start = Date.now(); 
+            const response = await axios.get(apiUrl);
+            const end = Date.now();
+            const time = (end - start) / 1000; 
+
+            if (response.data.key) {
+                await interaction.editReply({
+                    embeds: [{
+                        title: "Success Bypass Key <:Success:1250691675068567572>",
+                       "color": 0x17e628,
+                        thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
+                        image: {
+                            url: "",
+                          }, 
+                        fields: [
+                            { name: '🔑 Key fluxus:', value: `${box}${response.data.key}${box}` },
+                            { name: '⏳Response Time:', value: `${box}${time} Seconds${box}` }
+
+
+                        ],
+                        footer: {
+                            text: `Made by ${madeby}`
+                        },
+                        timestamp: new Date()
+                    }],
+                });            
+            } else {
+                await interaction.editReply({
+                    embeds: [{
+                        title: "Error Bypass Key <:Error:1250691802546180156> ",
+                        "color": 0xde0202,
+                        thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
+                        image: {
+                            url: "",
+                          }, 
+                        fields: [
+                            { name: 'Status:', value: '```Either Hwid Is Invalid Or Api Is Not Working.```' },
+                        ],
+                        footer: {
+                            text: `Made by ${madeby}`
+                        },
+                        timestamp: new Date()
+                    }],
+                });                       
+            }
+        } catch (error) {
+            console.error(error);
+            await interaction.editReply({
+                embeds: [{
+                    title: "Error Bypass Key <:Error:1250691802546180156>",
+                    "color": 0xde0202,
+                    thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
+                    image: {
+                        url: "",
+                      }, 
+                    fields: [
+                        { name: 'Status:', value: '```Either Api Is Ofline Or Not Responding.```' },
+                    ],
+                    footer: {
+                        text: `Made by ${madeby}`
+                    },
+                    timestamp: new Date()
+                }],
+            });         
+        }
+    } else {
+        await interaction.editReply({
+            embeds: [{
+                title: "Invalid link please try again <:Error:1250691802546180156>",
+               "color": 0xde0202,
                 fields: [
                     { name: 'Link', value: `${box}${link}${box}` }
                 ]
