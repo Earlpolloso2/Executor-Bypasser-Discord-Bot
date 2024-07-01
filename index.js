@@ -182,7 +182,7 @@ client.on('interactionCreate', async interaction => {
     } else if (interaction.commandName === 'fluxus') {
         await fluxus(interaction);
         if(advertise == false ){
-            await interaction.followUp({ content: `Join discord ${serverinvite}`, ephemeral: true });
+            await interaction.followUp({ content: serverinvite, ephemeral: true });
         }else{
             return;
         }
