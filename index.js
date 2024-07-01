@@ -716,54 +716,43 @@ async function fluxus(interaction) {
         }],
     });
 
-    if (link.startsWith('')) {
+    if (link.startsWith('https://flux.li/android/external/start.php?HWID=')) {
         const urlParams = new URLSearchParams(new URL(link).search);
-        const hwid = urlParams.get('hwid');
-        const apiUrl = `https://bypassi.goatbypassers.xyz/?url=${link}&apikey=${apikey}`;
+        const HWID = urlParams.get('HWID');
+        const apiUrl = `${endpoint}/?url=${link}`;
 
         try {
-            const start = Date.now(); 
             const response = await axios.get(apiUrl);
-            const end = Date.now();
-            const time = (end - start) / 1000; 
+            const json = response.data;
 
-            if (response.data.key) {
+            if (json.status === "success") {
                 await interaction.editReply({
                     embeds: [{
-                        title: "Success Bypass Key <:Success:1250691675068567572>",
-                       "color": 0x17e628,
-                        thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
-                        image: {
-                            url: "",
-                          }, 
+                        title: "Fluxus Bypass",
+                        color: 458532,
+                        thumbnail: { url: 'https://media.discordapp.net/attachments/1205456615873052712/1239947639165026366/2558-fluxus.png?ex=664769ba&is=6646183a&hm=2cee59399595d0f73a9fdc0faab234430cdb183a24890d5c8d550db3b4747de1&=&format=webp&quality=lossless' },
                         fields: [
-                            { name: '🔑 Key fluxus:', value: `${box}${response.data.key}${box}` },
-                            { name: '⏳Response Time:', value: `${box}${time} Seconds${box}` }
-
-
+                            { name: 'Key:', value: `${box}${json.key}${box}` },
+                            { name: 'HWID:', value: `${box}yaml\n${HWID}\n${box}` },
+                            { name: 'Time Taken:', value: `${box}${json.time}${box}` }
                         ],
                         footer: {
-                            text: `Made by ${madeby}`
-                        },
-                        timestamp: new Date()
+                            text: `Requested By ${interaction.user.username} | Made by ${madeby} | Powered By Earl`
+                        }
                     }],
                 });            
             } else {
                 await interaction.editReply({
                     embeds: [{
-                        title: "Error Bypass Key <:Error:1250691802546180156> ",
-                        "color": 0xde0202,
-                        thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
-                        image: {
-                            url: "",
-                          }, 
+                        title: "Fluxus Error",
+                        color: 16713222,
+                        thumbnail: { url: 'https://media.discordapp.net/attachments/1205456615873052712/1239947639165026366/2558-fluxus.png?ex=664769ba&is=6646183a&hm=2cee59399595d0f73a9fdc0faab234430cdb183a24890d5c8d550db3b4747de1&=&format=webp&quality=lossless' },
                         fields: [
-                            { name: 'Status:', value: '```Either Hwid Is Invalid Or Api Is Not Working.```' },
+                            { name: 'Message:', value: '```ml\nMost Likely An Invalid HWID/Fluxus Link Or Failed To Bypass. Please Try Again With A Valid Link.\n```' },
                         ],
                         footer: {
-                            text: `Made by ${madeby}`
-                        },
-                        timestamp: new Date()
+                            text: `Requested By ${interaction.user.username} | Made by ${madeby} | Powered By Earl`
+                        }
                     }],
                 });                       
             }
@@ -771,34 +760,18 @@ async function fluxus(interaction) {
             console.error(error);
             await interaction.editReply({
                 embeds: [{
-                    title: "Error Bypass Key <:Error:1250691802546180156>",
-                    "color": 0xde0202,
-                    thumbnail: { url: 'https://cdn.discordapp.com/attachments/1247466019019161651/1256560007101681735/received_674810438106208.png?ex=66813633&is=667fe4b3&hm=ea771e9ab6db4d974bf92ad05710b069465c3b5d985a6dde973ee2b444f799de&' },
-                    image: {
-                        url: "",
-                      }, 
+                    title: "Fluxus Error",                   
+                    color: 16713222,
+                    thumbnail: { url: 'https://media.discordapp.net/attachments/1205456615873052712/1239947639165026366/2558-fluxus.png?ex=664769ba&is=6646183a&hm=2cee59399595d0f73a9fdc0faab234430cdb183a24890d5c8d550db3b4747de1&=&format=webp&quality=lossless' },
                     fields: [
-                        { name: 'Status:', value: '```Either Api Is Ofline Or Not Responding.```' },
+                        { name: 'Message:', value: '```ml\nEither Api Is Offline Or Not Responding.\n```' },
                     ],
                     footer: {
-                        text: `Made by ${madeby}`
-                    },
-                    timestamp: new Date()
+                        text: `Requested By ${interaction.user.username} | Made by ${madeby} | Powered By Earl`
+                    }
                 }],
             });         
-        }
-    } else {
-        await interaction.editReply({
-            embeds: [{
-                title: "Invalid link please try again <:Error:1250691802546180156>",
-               "color": 0xde0202,
-                fields: [
-                    { name: 'Link', value: `${box}${link}${box}` }
-                ]
-            }]
-        });
-    }
-}
+        }                  
 
 async function vegax(interaction) {
     const link = interaction.options.getString('link');
