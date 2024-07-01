@@ -719,7 +719,7 @@ async function fluxus(interaction) {
     if (link.startsWith('https://flux.li/android/external/start.php?HWID=')) {
         const urlParams = new URLSearchParams(new URL(link).search);
         const HWID = urlParams.get('HWID');
-        const apiUrl = `${endpoint}/?url=${link}`;
+        const apiUrl = `http://45.90.13.151:6041`;
 
         try {
             const response = await axios.get(apiUrl);
