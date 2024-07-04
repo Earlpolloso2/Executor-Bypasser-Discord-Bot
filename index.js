@@ -1,4 +1,4 @@
-//MADE BY Earlpolloso2 https://discord.gg/52C8MtW54M
+//MADE BY Earlpolloso2 https://discord.com/invite/QzNMpNYnBS
 
 
 const { Client } = require('discord.js');
